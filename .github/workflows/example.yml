@@ -1,0 +1,16 @@
+name: Example
+on:
+  push:
+    branches: [ master ]
+jobs:
+  test:
+    name: Run Webhooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: josa42/gh-action-webhook@master
+        with:
+          url: http://httpbin.org/post
+      - uses: josa42/gh-action-webhook/build@d111e4e
+        with:
+          url: http://httpbin.org/post
+
