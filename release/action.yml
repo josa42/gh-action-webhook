@@ -1,4 +1,4 @@
-name: Webhook
+name: 'Webhook'
 author: Josa Gesell <josa@gesell.me>
 description: |
   Trigger Webkhooks
@@ -13,4 +13,3 @@ runs:
 branding:
   icon: 'refresh-ccw'
   color: 'blue'
-

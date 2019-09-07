@@ -1,4 +1,4 @@
-name: 'Webhook (build)'
+name: 'Webhook (latest)'
 author: Josa Gesell <josa@gesell.me>
 description: |
   Trigger Webkhooks
@@ -9,7 +9,7 @@ inputs:
     default: 'POST'
 runs:
   using: 'docker'
-  image: '../Dockerfile'
+  image: 'docker://josa/gh-action-webhook:latest'
 branding:
   icon: 'refresh-ccw'
   color: 'blue'
