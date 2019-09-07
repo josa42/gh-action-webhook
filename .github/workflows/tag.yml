@@ -1,14 +1,13 @@
-name: Master
+name: Tag
 on:
   push:
-    branches: [ master ]
+    tags: [ '*' ]
 jobs:
   test:
     name: Test and Push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-        with: { url: 'https://httpbin.org/get' }
       - name: 'Test: POST (ssl)'
         uses: ./build
         with: { url: 'https://httpbin.org/post' }
@@ -17,8 +16,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       - uses: actions/docker/cli@master
-        with: { args: 'build -t josa/gh-action-webhook:$(echo latest) .' }
-      - uses: actions/docker/cli@master
-        with: { args: 'push josa/gh-action-webhook:latest' }
-
+        with: { args: 'build -t josa/gh-action-webhook:$(echo "${{ github.ref }}" | sed "s/^.*\/\(.*\)$/\1/") .' }
+      - uses: 'actions/docker/cli@master'
+        with: { args: 'push josa/gh-action-webhook:$(echo "${{ github.ref }}" | sed "s/^.*\/\(.*\)$/\1/")' }
 

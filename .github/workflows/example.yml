@@ -7,12 +7,13 @@ jobs:
     name: Run Webhooks
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - uses: josa42/gh-action-webhook/build@master
         with:
           url: http://httpbin.org/post
-      - uses: josa42/gh-action-webhook/release@master
-        with:
-          url: http://httpbin.org/post
+      # - uses: josa42/gh-action-webhook/release@master
+      #   with:
+      #     url: http://httpbin.org/post
       - uses: josa42/gh-action-webhook/latest@master
         with:
           url: http://httpbin.org/post
