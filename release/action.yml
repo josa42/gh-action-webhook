@@ -9,7 +9,7 @@ inputs:
     default: 'POST'
 runs:
   using: 'docker'
-  image: 'docker://josa/gh-action-webhook:latest'
+  image: 'docker://josa/gh-action-webhook:0.1.0'
 branding:
   icon: 'refresh-ccw'
   color: 'blue'
