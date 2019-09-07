@@ -20,4 +20,10 @@ jobs:
         with:
           url: http://httpbin.org/post
           data: '{ "data": "Hallo Welt" }'
+      - uses: josa42/gh-action-webhook@master
+        with:
+          url: http://httpbin.org/post
+          data: '{ "data": "TEST" }'
+          authorization: 'Bearer ${{ secrets.TOKEN }}'
+
 

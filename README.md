@@ -4,11 +4,12 @@ A [Github Action](https://github.com/features/actions) to trigger a http request
 
 ## Arguments
 
-| Key      | Required | Default |
-|:---------|:---------|:--------|
-| `url`    | **Yes**  |         |
-| `method` | No       | `POST`  |
-| `data`   | No       |         |
+| Key             | Required | Default | Description                           |
+|:----------------|:---------|:--------|:--------------------------------------|
+| `url`           | **Yes**  |         |                                       |
+| `method`        | No       | `POST`  |                                       |
+| `data`          | No       |         |                                       |
+| `authorization` |          |         | Set `Authorization` header.           |
 
 ## Usage
 
@@ -19,6 +20,7 @@ To use the latest build add this step to your workflow:
   with:
     url: http://httpbin.org/post
     data: '{ "data": "TEST" }'
+    authorization: 'Bearer ${{ secrets.TOKEN }}'
 ```
 
 To use a specific version of the work flow add a step like this:

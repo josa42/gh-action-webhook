@@ -30,6 +30,10 @@ func main() {
 		req.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(data)))
 	}
 
+	if auth := getInput("authorization", ""); auth != "" {
+		req.Header.Set("Authorization", auth)
+	}
+
 	res, err := client.Do(req)
 	if err != nil {
 		log.Panicln(err)
