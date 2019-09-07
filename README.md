@@ -10,6 +10,7 @@ A [Github Action](https://github.com/features/actions) to trigger a http request
 | `method`        | No       | `POST`  |                                       |
 | `data`          | No       |         |                                       |
 | `authorization` |          |         | Set `Authorization` header.           |
+| `accept`        | No       |         | Set `Accept` header.                  |
 
 ## Usage
 

@@ -34,6 +34,10 @@ func main() {
 		req.Header.Set("Authorization", auth)
 	}
 
+	if accept := getInput("accept", ""); accept != "" {
+		req.Header.Set("Accept", accept)
+	}
+
 	res, err := client.Do(req)
 	if err != nil {
 		log.Panicln(err)
