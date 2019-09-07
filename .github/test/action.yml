@@ -1,0 +1,14 @@
+name: Webhook (Test)
+author: Josa Gesell <josa@gesell.me>
+description: |
+  Trigger Webkhooks
+inputs:
+  url:
+    description: 'url to request'
+    required: true
+  method:
+    default: 'POST'
+runs:
+  using: 'docker'
+  image: '../../Dockerfile'
+
