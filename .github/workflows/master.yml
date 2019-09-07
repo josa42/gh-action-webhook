@@ -7,18 +7,13 @@ jobs:
     name: Test and Push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-        with: { url: 'https://httpbin.org/get' }
+      - uses: 'actions/checkout@master'
       - name: 'Test: POST (ssl)'
         uses: ./build
         with: { url: 'https://httpbin.org/post' }
-      - uses: actions/docker/login@master
-        env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      - uses: actions/docker/cli@master
-        with: { args: 'build -t josa/gh-action-webhook:$(echo latest) .' }
-      - uses: actions/docker/cli@master
-        with: { args: 'push josa/gh-action-webhook:latest' }
-
+      - uses: 'josa42/gh-action-docker/latest@master'
+        with:
+          image: 'josa/gh-action-webhook'
+          docker_username: '${{ secrets.DOCKER_USERNAME }}'
+          docker_password: '${{ secrets.DOCKER_PASSWORD }}'
 
