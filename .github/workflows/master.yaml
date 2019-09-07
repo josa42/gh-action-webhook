@@ -1,0 +1,40 @@
+name: Test
+on:
+  push:
+    branches: [ master ]
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: 'Test: GET'
+        uses: ./build
+        with: { url: 'http://httpbin.org/get' }
+      - name: 'Test: POST'
+        uses: ./build
+        with: { url: 'http://httpbin.org/post' }
+      - name: 'Test: GET (ssl)'
+        uses: ./build
+        with: { url: 'https://httpbin.org/get' }
+      - name: 'Test: POST (ssl)'
+        uses: ./build
+        with: { url: 'https://httpbin.org/post' }
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: "actions/docker/login@master"
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      - uses: actions/docker/cli@master
+        with: { args: 'build -t josa/gh-action-webhook:latest .' }
+      - uses: actions/docker/cli@master
+        with: { args: 'push josa/gh-action-webhook:latest' }
+      - name: 'Test: POST (ssl)'
+        uses: ./
+        with: { url: 'https://httpbin.org/post' }
+
+

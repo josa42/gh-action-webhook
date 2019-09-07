@@ -10,5 +10,5 @@ inputs:
     default: 'POST'
 runs:
   using: 'docker'
-  image: '../../Dockerfile'
+  image: '../Dockerfile'
 
