@@ -16,4 +16,8 @@ jobs:
       - uses: josa42/gh-action-webhook/latest@master
         with:
           url: http://httpbin.org/post
+      - uses: josa42/gh-action-webhook/latest@master
+        with:
+          url: http://httpbin.org/post
+          data: '{ "data": "Hallo Welt" }'
 

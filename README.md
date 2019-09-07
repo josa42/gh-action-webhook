@@ -8,6 +8,7 @@ A [Github Action](https://github.com/features/actions) to trigger a http request
 |:---------|:---------|:--------|
 | `url`    | **Yes**  |         |
 | `method` | No       | `POST`  |
+| `data`   | No       |         |
 
 ## Usage
 
@@ -17,6 +18,7 @@ To use the latest build add this step to your workflow:
 - uses: josa42/gh-action-webhook@master
   with:
     url: http://httpbin.org/post
+    data: '{ "data": "TEST" }'
 ```
 
 To use a specific version of the work flow add a step like this:

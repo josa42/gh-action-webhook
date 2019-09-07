@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -16,17 +18,24 @@ func main() {
 	method := getInputEnum("method", methods, "POST")
 
 	client := http.Client{}
-	request, err := http.NewRequest(method, url, nil)
+	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
-		log.Fatalln(err)
+		log.Panicln(err)
 	}
 
-	resp, err := client.Do(request)
-	if err != nil {
-		log.Fatalln(err)
+	if data := getInput("data", ""); data != "" {
+		if isJSON(data) {
+			req.Header.Set("Content-Type", "application/json")
+		}
+		req.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(data)))
 	}
 
-	content, _ := ioutil.ReadAll(resp.Body)
+	res, err := client.Do(req)
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	content, _ := ioutil.ReadAll(res.Body)
 	fmt.Println(string(content))
 }
 
@@ -39,7 +48,7 @@ func getInput(name string, defaultValues ...string) string {
 		return defaultValues[0]
 	}
 
-	log.Fatalf("Error: Input '%s' is required!\n", name)
+	log.Panicf("Error: Input '%s' is required!\n", name)
 
 	return ""
 }
@@ -53,7 +62,19 @@ func getInputEnum(name string, enum []string, defaultValue ...string) string {
 		}
 	}
 
-	log.Fatalf("Error: Input '%s' has to be one of [%s]!\n", name, strings.Join(enum, ", "))
+	log.Panicf("Error: Input '%s' has to be one of [%s]!\n", name, strings.Join(enum, ", "))
 
 	return ""
+}
+
+func isJSON(s string) bool {
+	var arr []interface{}
+	var obj map[string]interface{}
+	var str string
+
+	check := func(d interface{}) bool {
+		return json.Unmarshal([]byte(s), d) == nil
+	}
+
+	return check(&obj) || check(&str) || check(&arr)
 }
