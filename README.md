@@ -16,43 +16,43 @@ A [Github Action](https://github.com/features/actions) to trigger a http request
 
 ## Usage
 
-To use the latest build add this step to your workflow:
-
 ```yaml
-- uses: 'josa42/gh-action-webhook/latest@master'
+- uses: 'josa42/gh-action-webhook/release@master'
   with:
     url:           'http://httpbin.org/post'
     authorization: 'Bearer ${{ secrets.TOKEN }}'
     data:          '{ "data": "TEST" }'
 ```
 
-To use a specific version of the work flow add a step like this:
+You can choose one of these versions:
 
-```yaml
-- uses: 'josa42/gh-action-webhook/build@d111e4e'
-  with:
-    url: 'http://httpbin.org/post'
-```
+- **Latest Release:** `josa42/gh-action-webhook/release@master`
+- **Latest Build** `josa42/gh-action-webhook/latest@master`
+- **A specific Release:** `josa42/gh-action-webhook/release@0.1.0`
+- **A specific commit:** `josa42/gh-action-webhook/build@54e5a00`  
+  (This will be slow since, the workflow needs to be build on every run)
 
 ## Examples
 
-`.github/workflows/master,yaml`
+**Post a Slack Message**
 
 ```yaml
-name: 'Example'
+name: 'New Tag'
 on:
-  push:
-    branches: [ 'master' ]
+  tag: [ '*' ]
 jobs:
   test:
-    name:    'Run Webhooks'
+    name:    'Publish master'
     runs-on: 'ubuntu-latest'
     steps:
-      - name: 'POST'
-        uses: 'josa42/gh-action-webhook/lastest@master'
+      - uses: 'josa42/gh-action-webhook/latest@master'
         with:
-          url: 'http://httpbin.org/post'
+          url:  'https://hooks.slack.com/services/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'
+          data: '{ "text": "New Tag: ${{github.ref}}!" }'
+
 ```
+
+See [Slack Documentation](https://api.slack.com/incoming-webhooks#enable_webhooks) for more infos.
 
 **Rebuild Github Page**
 
@@ -73,7 +73,6 @@ jobs:
           accept:        'application/vnd.github.mister-fantastic-preview+json'
 
 ```
-
 
 ## License
 

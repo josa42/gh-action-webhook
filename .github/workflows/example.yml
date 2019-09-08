@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: josa42/gh-action-webhook/build@master
+      - uses: josa42/gh-action-webhook/latest@master
         with:
           url: http://httpbin.org/post
-      # - uses: josa42/gh-action-webhook/release@master
-      #   with:
-      #     url: http://httpbin.org/post
+      - uses: josa42/gh-action-webhook/release@0.1.0
+        with:
+          url: http://httpbin.org/post
       - uses: josa42/gh-action-webhook/latest@master
         with:
           url: http://httpbin.org/post
@@ -26,5 +26,9 @@ jobs:
           url: http://httpbin.org/post
           data: '{ "data": "TEST" }'
           authorization: 'Bearer ${{ secrets.TOKEN }}'
+      - uses: 'josa42/gh-action-webhook/latest@master'
+        with:
+          url:  'https://hooks.slack.com/services/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'
+          data: '{ "text": "Hello World! (${{github.ref}})" }'
 
 
