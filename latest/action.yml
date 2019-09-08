@@ -4,9 +4,24 @@ description: |
   Trigger Webkhooks
 inputs:
   url:
+    description: 'Request URL.'
     required: true
   method:
+    description: 'GET, POST, PUT or DELETE'
+    required: false
     default: 'POST'
+  data:
+    description: 'Request Body.'
+    required: false
+  authorization:
+    description: 'Set `Authorization` header.'
+    required: false
+  accept:
+    description: 'Set `Accept` header.'
+    required: false
+  content_type:
+    description: 'Set `Content-Type` header.'
+    required: false
 runs:
   using: 'docker'
   image: 'docker://josa/gh-action-webhook:latest'

@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-var methods = []string{"GET", "POST"}
+var methods = []string{"GET", "POST", "PUT", "DELETE"}
 
 func main() {
 	url := getInput("url")
@@ -32,6 +32,10 @@ func main() {
 
 	if auth := getInput("authorization", ""); auth != "" {
 		req.Header.Set("Authorization", auth)
+	}
+
+	if contentType := getInput("content_type", ""); contentType != "" {
+		req.Header.Set("Content-Type", contentType)
 	}
 
 	if accept := getInput("accept", ""); accept != "" {

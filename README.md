@@ -4,15 +4,16 @@
 
 A [Github Action](https://github.com/features/actions) to trigger a http request.
 
-## Arguments
+## Input Parameters
 
 | Key             | Required | Default | Description                           |
 |:----------------|:---------|:--------|:--------------------------------------|
-| `url`           | **Yes**  |         |                                       |
-| `method`        | No       | `POST`  |                                       |
-| `data`          | No       |         |                                       |
-| `authorization` |          |         | Set `Authorization` header.           |
+| `url`           | **Yes**  |         | Request URL.                          |
+| `method`        | No       | `POST`  | GET, POST, PUT or DELETE              |
+| `data`          | No       |         | Request Body.                         |
+| `authorization` | No       |         | Set `Authorization` header.           |
 | `accept`        | No       |         | Set `Accept` header.                  |
+| `content_type`  | No       |         | Set `Content-Type` header.            |
 
 ## Usage
 
