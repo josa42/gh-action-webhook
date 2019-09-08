@@ -1,5 +1,7 @@
 # Github Action: Webhook
 
+[![Github Action](https://github.com/josa42/gh-action-webhook/workflows/Master/badge.svg)](https://github.com/josa42/gh-action-webhook/actions)
+
 A [Github Action](https://github.com/features/actions) to trigger a http request.
 
 ## Arguments
