@@ -7,15 +7,15 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
-	"strings"
+
+	"github.com/josa42/gh-actions-toolkit/core"
 )
 
 var methods = []string{"GET", "POST", "PUT", "DELETE"}
 
 func main() {
-	url := getInput("url")
-	method := getInputEnum("method", methods, "POST")
+	url := core.GetInput("url", core.Options{Required: true})
+	method := core.GetInput("method", core.Options{Enum: methods, Default: "POST"})
 
 	client := http.Client{}
 	req, err := http.NewRequest(method, url, nil)
@@ -23,22 +23,22 @@ func main() {
 		log.Panicln(err)
 	}
 
-	if data := getInput("data", ""); data != "" {
+	if data := core.GetInput("data", core.Options{Required: true}); data != "" {
 		if isJSON(data) {
 			req.Header.Set("Content-Type", "application/json")
 		}
 		req.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(data)))
 	}
 
-	if auth := getInput("authorization", ""); auth != "" {
+	if auth := core.GetInput("authorization", core.Options{}); auth != "" {
 		req.Header.Set("Authorization", auth)
 	}
 
-	if contentType := getInput("content_type", ""); contentType != "" {
+	if contentType := core.GetInput("content_type", core.Options{}); contentType != "" {
 		req.Header.Set("Content-Type", contentType)
 	}
 
-	if accept := getInput("accept", ""); accept != "" {
+	if accept := core.GetInput("accept", core.Options{}); accept != "" {
 		req.Header.Set("Accept", accept)
 	}
 
@@ -49,34 +49,6 @@ func main() {
 
 	content, _ := ioutil.ReadAll(res.Body)
 	fmt.Println(string(content))
-}
-
-func getInput(name string, defaultValues ...string) string {
-	if value := os.Getenv(fmt.Sprintf("INPUT_%s", strings.ToUpper(name))); value != "" {
-		return value
-	}
-
-	if len(defaultValues) == 1 {
-		return defaultValues[0]
-	}
-
-	log.Panicf("Error: Input '%s' is required!\n", name)
-
-	return ""
-}
-
-func getInputEnum(name string, enum []string, defaultValue ...string) string {
-	value := getInput(name, defaultValue...)
-
-	for _, e := range enum {
-		if value == e {
-			return value
-		}
-	}
-
-	log.Panicf("Error: Input '%s' has to be one of [%s]!\n", name, strings.Join(enum, ", "))
-
-	return ""
 }
 
 func isJSON(s string) bool {
